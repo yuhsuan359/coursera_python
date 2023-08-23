@@ -1,1 +1,2 @@
-# coursera_python
+# 
+#data science assignments
