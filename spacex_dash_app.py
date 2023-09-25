@@ -24,7 +24,7 @@ app.layout = html.Div(children=[html.H1('SpaceX Launch Records Dashboard',
                                                             {'label': 'CCAFS LC-40', 'value': 'CCAFS LC-40'},
                                                             {'label': 'CCAFS SLC-40', 'value': 'CCAFS SLC-40'},
                                                             {'label': 'KSC LC-39A', 'value': 'KSC LC-39A'},
-                                                            {'label': 'VAFB SLC-4E	', 'value': 'VAFB SLC-4E'},
+                                                            {'label': 'VAFB SLC-4E', 'value': 'VAFB SLC-4E'},
                                                         ],
                                                         value='ALL',
                                                         placeholder="Select a Launch Site here",
@@ -70,7 +70,7 @@ def get_pie_chart(entered_site):
         spacex_df_selected = spacex_df[spacex_df['Launch Site']==entered_site]
         fig = px.pie(spacex_df_selected, values='class count', 
         names='class', 
-        title='Total Success Launches By %s' % entered_site'
+        title='Total Success Launches By %s' % entered_site
         return fig
         
 # TASK 4:
@@ -86,7 +86,7 @@ def get_scatter_chart(selected_site, payload_range):
     else:
         # return the outcomes piechart for a selected site
         df = spacex_df[spacex_df['Launch Site']==selected_site]
-        df_mask = df[df['Payload Mass (kg)']>low and df['Payload Mass (kg)']<high]
+        df_mask = df[df['Payload Mass (kg)']>low & df['Payload Mass (kg)']<high]
     fig = px.scatter(df_mask,, x='Payload Mass (kg)', y='class',
                      color='Booster Version',
                      hover_data=['Payload Mass (kg)'])
