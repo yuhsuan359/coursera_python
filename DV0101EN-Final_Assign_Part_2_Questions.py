@@ -93,8 +93,8 @@ def update_output_container(selected_statistics, input_year):
         exp_rec=  recession_data.groupby(['Vehicle_Type'])['Advertising_Expenditure'].sum().reset_index()
         R_chart3 = dcc.Graph(
             figure=px.pie(exp_rec, 
-                 values=exp_rec.values,
-                 labels=exp_rec.index,
+                 values='Advertising_Expenditure',
+                 labels='Vehicle_Type',
                  title="Share of Each Vehicle Type in Total Sales during Recessions"))
 # Plot 4 bar chart for the effect of unemployment rate on vehicle type and sales
         une_rec=  recession_data.groupby(['Vehicle_Type','unemployment_rate'])['Automobile_Sales'].sum().reset_index()
@@ -116,9 +116,9 @@ def update_output_container(selected_statistics, input_year):
 #TASK 2.5: Creating Graphs Yearly data
                               
 #plot 1 Yearly Automobile sales using line chart for the whole period.
-        yas= data.groupby('Vehicle_Type')['Automobile_Sales'].mean().reset_index()
+        yas= data.groupby('Year')['Automobile_Sales'].mean().reset_index()
         Y_chart1 = dcc.Graph(figure=px.line(yas, 
-                x='Vehicle_Type',
+                x='Year',
                 y='Automobile_Sales',
                 title="Yearly Automobile sales"))
             
@@ -130,17 +130,17 @@ def update_output_container(selected_statistics, input_year):
                  title="Total Monthly Automobile sales"))
             # Plot bar chart for average number of vehicles sold during the given year
         avr_vdata=yearly_data.groupby('Vehicle_Type')['Automobile_Sales'].mean().reset_index()
-        Y_chart3 = dcc.Graph(figure=px.bar(avr_vdata, x='Vehicle_Type', y='Automobile_Sales'),title='Average Vehicles Sold by Vehicle Type in the year {}'.format(input_year))
+        Y_chart3 = dcc.Graph(figure=px.bar(avr_vdata, x='Vehicle_Type', y='Automobile_Sales',title='Average Vehicles Sold by Vehicle Type in the year {}'.format(input_year)))
             # Total Advertisement Expenditure for each vehicle using pie chart
-        exp_vdata=yearly_data.groupby(['Vehicle_Type'])['Advertising_Expenditure'].sum()
-        Y_chart4 = dcc.Graph(figure=px.pie(exp_vdata, exp_rec, 
+        exp_vdata=yearly_data.groupby('Vehicle_Type')['Advertising_Expenditure'].sum().reset_index()
+        Y_chart4 = dcc.Graph(figure=px.pie(exp_vdata,
                  values='Advertising_Expenditure',
                  names='Vehicle_Type',
                  title="Total Advertisement Expenditure for each vehicle in the year {}'.format(input_year)"))
 #TASK 2.6: Returning the graphs for displaying Yearly data
         return [
-                html.Div(className='chart-item', children=[html.Div(Y_chart1),html.Div(Y_chart2)],display={'flex'}),
-                html.Div(className='chart-item', children=[html.Div(Y_chart3),html.Div(Y_chart4)],display={'flex'})
+                html.Div(className='chart-item', children=[html.Div(Y_chart1),html.Div(Y_chart2)]),
+                html.Div(className='chart-item', children=[html.Div(Y_chart3),html.Div(Y_chart4)])
                 ]
         
     else:
